@@ -35,19 +35,13 @@
     _movie.playAtActualSpeed = YES;
     _movie.runBenchmark = YES;
     
-    /**
-     *  添加卡通滤镜
-     */
-    GPUImageGaussianSelectiveBlurFilter *filter = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
-    filter.excludeBlurSize = 0.5;      // 清晰区域的大小
-    filter.blurRadiusInPixels = 30;    // 清晰区域外的模糊程度，同 GPUImageGaussianBlurFilter
-    filter.excludeCirclePoint = CGPointMake(0.5, 0.5);     // 清晰区域的中心坐标
-    filter.excludeCircleRadius = 0.5;  // 清晰区域的半径
-    filter.aspectRatio = 3;          // 清晰区域的宽高比，宽度会保持 excludeCircleRadius 的值，高度为 excludeCircleRadius / aspectRatio
+    GPUImageGaussianBlurFilter *filter = [[GPUImageGaussianBlurFilter alloc] init];
+    filter.blurRadiusInPixels = 50;
     
     [_movie addTarget:filter];
 
     
+    self.filterView = [[GPUImageView alloc]initWithFrame:CGRectMake(0, 0, 375, 500)];
     [filter addTarget:self.filterView];
     [self.view addSubview:_filterView];
     [_movie startProcessing];
